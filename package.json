@@ -1,0 +1,29 @@
+{
+  "name": "team-generator",
+  "version": "1.0.0",
+  "description": "Generates team based on user feedback",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhurst16/Team-Generator.git"
+  },
+  "author": "Jeremy Hurst",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhurst16/Team-Generator/issues"
+  },
+  "homepage": "https://github.com/jhurst16/Team-Generator#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "inquirer": "^8.1.1"
+  },
+  "devDependencies": {
+    "jest": "^27.0.5"
+  }
+}
