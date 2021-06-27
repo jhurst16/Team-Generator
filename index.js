@@ -179,23 +179,23 @@ const chooseNewMemberType = () => {
     .then((answers) => {
       const employeeType = employeeTypes[answers.type]
       employeeType().then((answers) => {
-        return inquirer.prompt([
-          {
-            type: 'list',
-            name: 'continue',
-            message: 'Are you adding another new member? (Required)',
-            choices: ['Add a new member!', 'I have no more members to add!'],
-          },
-        ])
-        .then((answers) => {
+        return inquirer
+          .prompt([
+            {
+              type: 'list',
+              name: 'continue',
+              message: 'Are you adding another new member? (Required)',
+              choices: ['Add a new member!', 'I have no more members to add!'],
+            },
+          ])
+          .then((answers) => {
             if (answers.continue === 'Add a new member!') {
-                chooseNewMemberType()
+              chooseNewMemberType()
+            } else {
+              //generate HTML
+              console.log(newTeamMember)
             }
-            else {
-                //generate HTML
-                console.log(newTeamMember)
-            }
-        })
+          })
       })
     })
 }
