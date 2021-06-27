@@ -5,9 +5,23 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
-const generateHTML = require('./src/generateHTML.js')
+const FinalHTML = require('./src/generateHTML.js')
 
 const newTeamMember = []
+
+const writeToFile = fileContent => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile('./dist/index.html', fileContent, err => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve({
+        ok: true
+      });
+    });
+  });
+};
 
 const managerPrompt = () => {
   return inquirer
@@ -33,7 +47,7 @@ const managerPrompt = () => {
           if (employeeId) {
             return true
           } else {
-            console.log('Please enter a valid Email!.')
+            console.log('Please enter a valid ID!.')
             return false
           }
         },
@@ -52,7 +66,7 @@ const managerPrompt = () => {
     .then((answers) => {
       const newManager = new Manager(
         answers.manager,
-        answers.employeeID,
+        answers.employeeId,
         answers.email,
         answers.officeNumber,
       )
@@ -83,7 +97,7 @@ const engineerPrompt = () => {
           if (employeeId) {
             return true
           } else {
-            console.log('Please enter a valid Email!.')
+            console.log('Please enter a valid ID!')
             return false
           }
         },
@@ -96,13 +110,13 @@ const engineerPrompt = () => {
       {
         type: 'input',
         name: 'github',
-        message: 'Please enter your github username!',
+        message: 'Please enter your github username.',
       },
     ])
     .then((answers) => {
       const newEngineer = new Engineer(
         answers.engineer,
-        answers.employeeID,
+        answers.employeeId,
         answers.email,
         answers.github,
       )
@@ -150,13 +164,13 @@ const internPrompt = () => {
       },
     ])
     .then((answers) => {
-      const newEngineer = new Engineer(
+      const newIntern = new Intern(
         answers.intern,
-        answers.employeeID,
+        answers.employeeId,
         answers.email,
         answers.school,
       )
-      newTeamMember.push(newEngineer)
+      newTeamMember.push(newIntern)
     })
 }
 
@@ -192,11 +206,12 @@ const chooseNewMemberType = () => {
             if (answers.continue === 'Add a new member!') {
               chooseNewMemberType()
             } else {
-              //generate HTML
               console.log(newTeamMember)
+              writeToFile(FinalHTML(newTeamMember))
             }
           })
       })
     })
 }
+
 chooseNewMemberType()
